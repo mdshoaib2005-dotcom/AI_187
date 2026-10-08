@@ -1,40 +1,28 @@
-def knapsack(weights, value, capacity):
-    n = len(weights)
-    max_value = 0
-    best_items = []
+weights = [10, 12, 8, 14, 17]
+profits = [78, 60, 90, 100, 140]
 
-    for mask in range(1 , n):
-        total_weight = 0
-        total_value = 0
-        items = []
+capacity = int(input("Enter capacity of the knapsack:"))
 
-        for i in range(n):
-                if mask & (1 << i):
-                    total_weight += weights[i]
-                    total_value += values[i]
-                    items.append(i + 1)
+n = len(weights)
+max_profit = 0
+best_items = []
 
-        if total_weight <= capacity and total_value > max_value:
-                max_value = total_value
-                best_items = items
+for i in range(2 ** n):
+    total_weight = 0
+    total_profit = 0
+    items = []
 
-    return max_value, best_items
+    for j in range (n):
+        if i & (1 << j):
+            total_weight += weights[j]
+            total_profit += profits[j]
+            items.append(j + 1)
+    if total_weight <= capacity and total_profit > max_profit:
+        max_profit = total_profit
+        best_items = items
 
-n = int(input("Enter number of items:"))
-
-weights = []
-values = []
-
-for i in range (n):
-      w = int(input(f"Enter weight of item{i + 1}: "))
-      v = int(input(f"Enter value of item{i + 1}: "))
-      weights.append(w)
-      values.append(v)
-
-capacity = int(input("Enter Knapsack Capacity: "))
-
-max_value, best_items = knapsack(weights, values, capacity)
+print("Selected items:", best_items)
+print("Maximum Profit:", max_profit)
 
 
-print("\nMaximum Value:", max_value)
-print("Selected items;", best_items)
+
